@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club de Fútbol Monterrey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .oscuro {
+            background-color: #000; /* Fondo negro en tema oscuro */
+            color: white; /* Texto blanco en tema oscuro */
+        }
+        .oscuro section.active {
+            background-color: #000; /* Fondo negro */
+            color: white; /* Texto blanco */
+        }
+        .ligero {
+            background-color: #f5f5f5;
+            color: black;
+        }
+        header {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+        nav {
+            background-color: rgb(0, 0, 0);
+            padding: 0.5em 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 0 1em;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2em;
+            background-color: #f5f5f5;
+        }
+        section {
+            display: none;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+        section.active {
+            display: block;
+        }
+        section h2 {
+            color: #005BAC;
+        }
+        section img {
+            max-width: 300px;
+            height: auto;
+            margin: 1em auto 0;
+        }
+        footer {
+            text-align: center;
+            padding: 1em;
+            background-color: #005BAC;
+            color: white;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #005BAC;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button-container button:hover {
+            background-color: #003f72;
+        }
+    </style>
+</head>
+<body class="ligero">
+    <header>
+        <h1 id="header-title">Club de Fútbol Monterrey</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a onclick="mostrarSeccion('historia')">Historia</a></li>
+            <li><a onclick="mostrarSeccion('estadio')">Estadio</a></li>
+            <li><a onclick="mostrarSeccion('logros')">Logros</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="historia" class="active">
+            <h2 id="historia-title">Historia</h2>
+            <p id="historia-text">El Club de Fútbol Monterrey, conocido como los Rayados, fue fundado en 1945 y ha sido un equipo emblemático del fútbol mexicano. A lo largo de los años, los Rayados han construido una rica tradición de fútbol apasionado, representando a la ciudad de Monterrey con orgullo y pasión.</p>
+            <img src="escudo.jpg" alt="Escudo del Club Monterrey">
+        </section>
+        <section id="estadio">
+            <h2 id="estadio-title">Estadio</h2>
+            <p id="estadio-text">El Estadio BBVA es la casa de los Rayados, un recinto moderno con capacidad para más de 50,000 espectadores. Inaugurado en 2015, el estadio combina diseño innovador y tecnología de vanguardia, siendo reconocido como uno de los mejores estadios de América Latina.</p>
+            <img src="estadio bbva.jpg" alt="Estadio BBVA">
+        </section>
+        <section id="logros">
+            <h2 id="logros-title">Logros</h2>
+            <p id="logros-text">El equipo ha ganado múltiples títulos nacionales e internacionales, destacándose como uno de los mejores clubes de México. Entre sus logros más destacados se encuentran campeonatos de la Liga MX, la Copa MX y la Liga de Campeones de la Concacaf, además de destacadas participaciones en el Mundial de Clubes.</p>
+            <img src="titulos.jpg" alt="Títulos del Club Monterrey">
+        </section>
+    </main>
+    <footer>
+        <p id="footer-text">Club de Fútbol Monterrey - Todos los derechos reservados</p>
+    </footer>
+
+    <div class="button-container">
+        <button id="btn-theme">Cambiar Tema</button>
+        <button id="btn-language">Cambiar Idioma</button>
+    </div>
+
+    <script>
+        function mostrarSeccion(id) {
+            // Oculta todas las secciones
+            const secciones = document.querySelectorAll('section');
+            secciones.forEach(seccion => seccion.classList.remove('active'));
+
+            // Muestra la sección seleccionada
+            const seccionSeleccionada = document.getElementById(id);
+            if (seccionSeleccionada) {
+                seccionSeleccionada.classList.add('active');
+            }
+        }
+
+        class Configuracion {
+            constructor() {
+                if (!Configuracion.instance) {
+                    this.tema = "ligero";
+                    this.idioma = "es";
+                    Configuracion.instance = this;
+                }
+                return Configuracion.instance;
+            }
+
+            cambiarTema() {
+                this.tema = this.tema === "ligero" ? "oscuro" : "ligero";
+                document.body.className = this.tema;
+            }
+
+            cambiarIdioma() {
+                this.idioma = this.idioma === "es" ? "en" : "es";
+                this.aplicarIdioma();
+            }
+
+            aplicarIdioma() {
+                const textos = {
+                    es: {
+                        headerTitle: "Club de Fútbol Monterrey",
+                        historiaTitle: "Historia",
+                        historiaText: "El Club de Fútbol Monterrey, conocido como los Rayados, fue fundado en 1945 y ha sido un equipo emblemático del fútbol mexicano...",
+                        estadioTitle: "Estadio",
+                        estadioText: "El Estadio BBVA es la casa de los Rayados, un recinto moderno con capacidad para más de 50,000 espectadores...",
+                        logrosTitle: "Logros",
+                        logrosText: "El equipo ha ganado múltiples títulos nacionales e internacionales...",
+                        footerText: "Club de Fútbol Monterrey - Todos los derechos reservados"
+                    },
+                    en: {
+                        headerTitle: "Club de Fútbol Monterrey",
+                        historiaTitle: "History",
+                        historiaText: "The Club de Fútbol Monterrey, known as the Rayados, was founded in 1945 and has been a leading team in Mexican football...",
+                        estadioTitle: "Stadium",
+                        estadioText: "The BBVA Stadium is the home of the Rayados, a modern venue with a capacity for more than 50,000 spectators...",
+                        logrosTitle: "Achievements",
+                        logrosText: "The team has won multiple national and international titles...",
+                        footerText: "Club de Fútbol Monterrey - All rights reserved"
+                    }
+                };
+
+                // Cambiar textos
+                document.getElementById("header-title").textContent = textos[this.idioma].headerTitle;
+                document.getElementById("historia-title").textContent = textos[this.idioma].historiaTitle;
+                document.getElementById("historia-text").textContent = textos[this.idioma].historiaText;
+                document.getElementById("estadio-title").textContent = textos[this.idioma].estadioTitle;
+                document.getElementById("estadio-text").textContent = textos[this.idioma].estadioText;
+                document.getElementById("logros-title").textContent = textos[this.idioma].logrosTitle;
+                document.getElementById("logros-text").textContent = textos[this.idioma].logrosText;
+                document.getElementById("footer-text").textContent = textos[this.idioma].footerText;
+            }
+        }
+
+        const configuracion = new Configuracion();
+
+        // Evento para cambiar el tema
+        document.getElementById('btn-theme').addEventListener('click', () => {
+            configuracion.cambiarTema();
+        });
+
+        // Evento para cambiar el idioma
+        document.getElementById('btn-language').addEventListener('click', () => {
+            configuracion.cambiarIdioma();
+        });
+    </script>
+</body>
+</html>
